@@ -56,7 +56,7 @@ resource "aws_iam_role_policy" "this" {
 
 resource "aws_lambda_function" "this" {
   function_name    = var.name
-  filename         = "${path.module}/.archive_files/lambda.zip"
+  filename         = "${path.module}/lambda.zip"
   source_code_hash = data.archive_file.this.output_base64sha256
   handler          = "main.lambda_handler"
   role             = aws_iam_role.this.arn
@@ -78,8 +78,8 @@ resource "aws_lambda_function" "this" {
 
 data "archive_file" "this" {
   type        = "zip"
-  output_path = "${path.module}/.archive_files/lambda.zip"
-  source_file = "main.py"
+  output_path = "${path.module}/lambda.zip"
+  source_file = "${path.module}/main.py"
 }
 
 resource "aws_lambda_permission" "with_sns" {
